@@ -1,7 +1,7 @@
 name: deposits_oneclick_checkout
 description: A package to enable customers pay for purchased items on a one click-checkout button.
 version: 0.0.3
-homepage: https://gitlab.com/yourex.io/mobile_apps/checkout/paywithdepositbutton
+homepage: https://github.com/DepositsTeam/deposits-oneclick-checkout
 
 false_secrets:
   - /lib/app/modules/linked/linked/linked.dart
