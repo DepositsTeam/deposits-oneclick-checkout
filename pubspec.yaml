@@ -1,6 +1,6 @@
 name: deposits_oneclick_checkout
 description: A package to enable customers pay for purchased items on a one click-checkout button.
-version: 0.0.3
+version: 0.0.4
 homepage: https://github.com/DepositsTeam/deposits-oneclick-checkout
 
 false_secrets:
