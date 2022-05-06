@@ -15,7 +15,7 @@ class _ConfirmOtpState extends State<ConfirmOtp> {
     super.initState();
     controller.otpController.text = '';
     controller.otpController.addListener(() {
-       if (mounted) setState(() {});
+      if (mounted) setState(() {});
     });
   }
 
@@ -48,8 +48,7 @@ class _ConfirmOtpState extends State<ConfirmOtp> {
     return Form(
         key: controller.formKey,
         child: Padding(
-            padding:
-                EdgeInsets.symmetric(horizontal: (20)),
+            padding: const EdgeInsets.symmetric(horizontal: (20)),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -71,7 +70,7 @@ class _ConfirmOtpState extends State<ConfirmOtp> {
   Widget otpDesc() {
     return Container(
       alignment: Alignment.topCenter,
-      margin: EdgeInsets.symmetric(vertical: (15)),
+      margin: const EdgeInsets.symmetric(vertical: (15)),
       child: CustomText(
         txtAlign: TextAlign.center,
         text: Strings.confrimOtpDesc +
@@ -85,7 +84,7 @@ class _ConfirmOtpState extends State<ConfirmOtp> {
 //--------------------------------------------------------
   Widget otpInput() {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: (15)),
+      margin: const EdgeInsets.symmetric(vertical: (15)),
       child: CustomTextFieldWidget(
         controller: controller.otpController,
         keyboardType: TextInputType.text,
@@ -103,7 +102,7 @@ class _ConfirmOtpState extends State<ConfirmOtp> {
     return Obx(() => Offstage(
       offstage: controller.offStageAuthoriseButton.value,
       child: Container(
-          margin: EdgeInsets.symmetric(vertical: (10)),
+          margin: const EdgeInsets.symmetric(vertical: (10)),
           child: CustomElevatedButton(
             onPressed: () => controller.authoriseOtp(context),
             minWidth: Get.width,
@@ -114,8 +113,8 @@ class _ConfirmOtpState extends State<ConfirmOtp> {
                     ? AppColors.white
                     : AppColors.black),
             buttonColor: controller.otpController.text.isEmpty
-                ? AppColors.inActivButtonColor
-                : AppColors.activButtonColor,
+                ? AppColors.inActivButtonColor()
+                : AppColors.activButtonColor(),
           )),
     ));
   }
@@ -125,16 +124,16 @@ class _ConfirmOtpState extends State<ConfirmOtp> {
     return Obx(() => Offstage(
       offstage: controller.offStageRequestButton.value,
       child: Container(
-        margin: EdgeInsets.symmetric(vertical: (20)),
+        margin:const EdgeInsets.symmetric(vertical: (20)),
         child: CustomElevatedButton(
               onPressed: () => controller.resendOtp(context),
               minWidth: Get.width,
               addBorder: true,
               title: Strings.requestOtp,
               isBusy: controller.isResendLoading.value,
-              textColor: AppColors.borderButtonColor,
+              textColor: AppColors.borderButtonColor(),
               buttonColor: AppColors.white,
-              loaderColor: AppColors.borderButtonColor,
+              loaderColor: AppColors.borderButtonColor(),
             ),
       ),
     ));

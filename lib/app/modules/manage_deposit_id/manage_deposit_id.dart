@@ -32,11 +32,11 @@ class _ManageDepositIDState extends State<ManageDepositID> {
               onBackPress: () {
                  Navigator.pop(context);
               },
-              bottom:const TabBar(
-              labelColor: AppColors.activButtonColor,
-              unselectedLabelColor: Color(0xFF5F6B7A),
-              indicatorColor: AppColors.activButtonColor,
-              tabs:[
+              bottom: TabBar(
+              labelColor: AppColors.activButtonColor(),
+              unselectedLabelColor: const Color(0xFF5F6B7A),
+              indicatorColor: AppColors.activButtonColor(),
+              tabs:const [
                 Tab(text: Strings.payment,),
                 Tab(text: Strings.linked),
                 Tab(text: Strings.address),

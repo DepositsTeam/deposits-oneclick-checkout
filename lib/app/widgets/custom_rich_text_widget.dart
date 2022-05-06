@@ -45,7 +45,7 @@ class CustomRichTextWidget extends StatelessWidget {
             style: subtitleStyle ??
                 AppTextStyle.regularStyle.copyWith(
                   fontSize: Dimens.fontSize14,
-                  color: AppColors.activButtonColor
+                  color: AppColors.activButtonColor()
                 ),
           ),
           TextSpan(
@@ -55,7 +55,7 @@ class CustomRichTextWidget extends StatelessWidget {
             style: subtitleStyle2 ??
                 AppTextStyle.regularStyle.copyWith(
                   fontSize: Dimens.fontSize14,
-                  color: AppColors.activButtonColor
+                  color: AppColors.activButtonColor()
                 ),
           ),
           TextSpan(
@@ -74,7 +74,7 @@ class CustomRichTextWidget extends StatelessWidget {
             style: subtitleStyle3 ??
                 AppTextStyle.regularStyle.copyWith(
                   fontSize: Dimens.fontSize14,
-                  color: AppColors.activButtonColor
+                  color: AppColors.activButtonColor()
                 ),
           ),
         ],

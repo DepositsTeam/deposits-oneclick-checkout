@@ -103,7 +103,7 @@ class _PaymentsState extends State<Payments>with WidgetsBindingObserver  {
                         Icons.close,
                         size: 24,
                       )),
-                  activeColor: AppColors.activButtonColor,
+                  activeColor: AppColors.activButtonColor(),
                   title: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -204,7 +204,7 @@ class _PaymentsState extends State<Payments>with WidgetsBindingObserver  {
       minWidth: Get.width,
       addBorder: true,
       title: Strings.addNewCard,
-      textColor: AppColors.borderButtonColor,
+      textColor: AppColors.borderButtonColor(),
       buttonColor: AppColors.white,
     );
   }
@@ -218,8 +218,8 @@ class _PaymentsState extends State<Payments>with WidgetsBindingObserver  {
           addBorder: true,
           isBusy: controller.isAddBank.value,
           title: Strings.addNewBank,
-          loaderColor: AppColors.activButtonColor,
-          textColor: AppColors.borderButtonColor,
+          loaderColor: AppColors.activButtonColor(),
+          textColor: AppColors.borderButtonColor(),
           buttonColor: AppColors.white,
         ));
   }
@@ -269,7 +269,7 @@ class _PaymentsState extends State<Payments>with WidgetsBindingObserver  {
                             Icons.close,
                             size: 24,
                           )),
-                      activeColor: AppColors.activButtonColor,
+                      activeColor: AppColors.activButtonColor(),
                       title: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,

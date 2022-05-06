@@ -14,9 +14,9 @@ class SvgImageLoader extends StatelessWidget {
       fit: fit!,
       width: width,
       height: height,
-      placeholderBuilder: (context) =>const Center(
+      placeholderBuilder: (context) => Center(
             child: SpinKitFadingCircle(
-          color: AppColors.activButtonColor,
+          color: AppColors.activButtonColor(),
           size: 20,
         )),
     );

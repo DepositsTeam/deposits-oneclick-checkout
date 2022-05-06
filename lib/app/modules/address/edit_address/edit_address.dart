@@ -189,8 +189,8 @@ class _EditAddressState extends State<EditAddress> {
                       ? AppColors.black
                       : AppColors.white),
               buttonColor: controller.validateInput()
-                  ? AppColors.activButtonColor
-                  : AppColors.inActivButtonColor,
+                  ? AppColors.activButtonColor()
+                  : AppColors.inActivButtonColor(),
             )),
             horizontalSpaceSmall,
             horizontalSpaceTiny,
@@ -211,7 +211,7 @@ class _EditAddressState extends State<EditAddress> {
   Widget checkDefault() {
     return CheckboxListTile(
       value: controller.isDefaultAddressSet.value,
-      activeColor: AppColors.activButtonColor,
+      activeColor: AppColors.activButtonColor(),
       checkColor: AppColors.white,
       contentPadding: EdgeInsets.zero,
       controlAffinity: ListTileControlAffinity.leading,

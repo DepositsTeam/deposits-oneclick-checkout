@@ -50,7 +50,7 @@ class CustomRowTextWidget extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: subtitleStyle ??
                 AppTextStyle.regularStyle.copyWith(
-                  color: AppColors.borderButtonColor,
+                  color: AppColors.borderButtonColor(),
                   fontSize: (Dimens.fontSize16),
                   fontWeight: FontWeight.w600
                 ),

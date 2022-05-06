@@ -77,7 +77,7 @@ class _ProfileState extends State<Profile> with WidgetsBindingObserver {
           minWidth: Get.width,
           addBorder: true,
           title: Strings.editProfile,
-          textColor: AppColors.borderButtonColor,
+          textColor: AppColors.borderButtonColor(),
           buttonColor: AppColors.white,
         ),
         Container(

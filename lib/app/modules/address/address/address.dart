@@ -92,7 +92,7 @@ class _AddressState extends State<Address> with WidgetsBindingObserver {
           minWidth: Get.width,
           addBorder: true,
           title: Strings.addMailingAddress,
-          textColor: AppColors.borderButtonColor,
+          textColor: AppColors.borderButtonColor(),
           buttonColor: AppColors.white,
     );
   }

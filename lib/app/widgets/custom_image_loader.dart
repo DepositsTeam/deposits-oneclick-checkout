@@ -17,9 +17,9 @@ class ImageLoader extends StatelessWidget {
       loadingBuilder: (BuildContext context, Widget child,
           ImageChunkEvent? loadingProgress) {
         if (loadingProgress == null) return child;
-        return const Center(
+        return  Center(
             child: SpinKitFadingCircle(
-          color: AppColors.activButtonColor,
+          color: AppColors.activButtonColor(),
           size: 20,
         ));
       },

@@ -6,7 +6,7 @@ class CustomTextButton extends StatelessWidget {
   final double height;
   final double? buttonWidth, textFontSize;
   final Widget? child;
-  final Color buttonColor;
+  final Color? buttonColor;
   final bool addBorder;
 
   const CustomTextButton({
@@ -15,7 +15,7 @@ class CustomTextButton extends StatelessWidget {
     this.title,
     this.height = 52,
     this.child,
-    this.buttonColor = AppColors.activButtonColor,
+    this.buttonColor,
     this.buttonWidth,
     this.textFontSize,
     this.addBorder = false,
@@ -58,7 +58,7 @@ class CustomTextButton extends StatelessWidget {
                   side: BorderSide(
                     color: buttonColor == AppColors.activButtonColor
                         ? Colors.white
-                        : AppColors.activButtonColor,
+                        : AppColors.activButtonColor(),
                     width: 2,
                   ),
                 ),
@@ -70,7 +70,7 @@ class CustomTextButton extends StatelessWidget {
               return AppColors.doveGray;
             }
 
-            return buttonColor;
+            return buttonColor!;
           },
         ),
       ),
@@ -81,7 +81,7 @@ class CustomTextButton extends StatelessWidget {
               fontSize: textFontSize ?? Dimens.fontSize16,
               color: buttonColor == Colors.white ||
                       buttonColor == Colors.transparent
-                  ? AppColors.activButtonColor
+                  ? AppColors.activButtonColor()
                   : Colors.white,
             ),
           ),

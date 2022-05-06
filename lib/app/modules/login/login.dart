@@ -1,7 +1,6 @@
 import 'package:deposits_oneclick_checkout/app/common/utils/exports.dart';
 
 class Login extends StatefulWidget {
-
   const Login({Key? key}) : super(key: key);
 
   @override
@@ -155,7 +154,7 @@ class _LoginState extends State<Login> {
 //--------------------------------------------------------
   Widget logInButton() {
     return Obx(() => Container(
-        margin:const EdgeInsets.symmetric(vertical: (15)),
+        margin: const EdgeInsets.symmetric(vertical: (15)),
         child: CustomElevatedButton(
           onPressed: () => controller.signIn(context),
           minWidth: Get.width,
@@ -166,8 +165,8 @@ class _LoginState extends State<Login> {
                   ? AppColors.white
                   : AppColors.black),
           buttonColor: controller.emailController.text.isEmpty
-              ? AppColors.inActivButtonColor
-              : AppColors.activButtonColor,
+              ? AppColors.inActivButtonColor()
+              : AppColors.activButtonColor(),
         )));
   }
 

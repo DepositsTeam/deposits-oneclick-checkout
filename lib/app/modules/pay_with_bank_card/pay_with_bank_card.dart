@@ -84,9 +84,9 @@ class _PayWithBankCardState extends State<PayWithBankCard> {
             addBorder: true,
             title: Strings.useBankLogin,
             isBusy: controller.isLoading.value,
-            textColor: AppColors.borderButtonColor,
+            textColor: AppColors.borderButtonColor(),
             buttonColor: AppColors.white,
-            loaderColor: AppColors.borderButtonColor,
+            loaderColor: AppColors.borderButtonColor(),
          );
   }
 //--------------------------------------------------------

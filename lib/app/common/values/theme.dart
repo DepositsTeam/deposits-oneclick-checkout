@@ -15,13 +15,13 @@ class AppTheme {
 
     return ThemeData(
       brightness: Brightness.light,
-      primaryColor: AppColors.activButtonColor,
+      primaryColor: AppColors.activButtonColor(),
       visualDensity: VisualDensity.adaptivePlatformDensity,
-      appBarTheme: const AppBarTheme(
-        color: AppColors.activButtonColor,
+      appBarTheme:  AppBarTheme(
+        color: AppColors.activButtonColor(),
       ),
       buttonTheme: ButtonThemeData(
-        buttonColor: AppColors.activButtonColor,
+        buttonColor: AppColors.activButtonColor(),
         height: 45,
         textTheme: ButtonTextTheme.primary,
         shape: RoundedRectangleBorder(
@@ -84,9 +84,9 @@ class AppTheme {
           ),
         ),
       ),
-      floatingActionButtonTheme: const FloatingActionButtonThemeData(
+      floatingActionButtonTheme:  FloatingActionButtonThemeData(
         elevation: 4,
-        backgroundColor: AppColors.activButtonColor,
+        backgroundColor: AppColors.activButtonColor(),
       ),
       textTheme: TextTheme(
         subtitle1: AppTextStyle.regularStyle.copyWith(

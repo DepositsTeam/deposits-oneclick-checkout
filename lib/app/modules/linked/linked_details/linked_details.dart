@@ -102,9 +102,9 @@ class _LinkedDetailsState extends State<LinkedDetails> {
           verticalSpaceTiny,
           CustomText(
             text: widget.linkedItem?.website??'null',
-            textStyle: const TextStyle(
+            textStyle: TextStyle(
               fontSize: (Dimens.fontSize16),
-              color: AppColors.activButtonColor,
+              color: AppColors.activButtonColor(),
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -276,7 +276,7 @@ class _LinkedDetailsState extends State<LinkedDetails> {
       textStyle: const TextStyle(
         color: AppColors.black,
       ),
-      buttonColor: AppColors.activButtonColor,
+      buttonColor: AppColors.activButtonColor(),
     );
   }
 

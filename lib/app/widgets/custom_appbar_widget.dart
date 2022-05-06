@@ -1,14 +1,14 @@
-
 import 'package:deposits_oneclick_checkout/app/common/utils/exports.dart';
 
 class CustomAppbarWidget extends PreferredSize {
   final String? title;
-  final Color? backgroundColor, backbuttonColor, closeButtonColor,textColor;
+  final Color? backgroundColor;
+  final Color? backbuttonColor, closeButtonColor, textColor;
   final TextStyle? textStyle;
   final List<Widget>? actions;
-  final Function()? onActionButtonTap, onBackPress,onClosePress;
+  final Function()? onActionButtonTap, onBackPress, onClosePress;
   final double? actionButtonWidth, textSize;
-  final Widget? titleWidget, leading,onCloseLeading, bottom;
+  final Widget? titleWidget, leading, onCloseLeading, bottom;
   final bool addBackButton;
   final bool addCloseButton;
   final bool? centerTitle;
@@ -24,7 +24,7 @@ class CustomAppbarWidget extends PreferredSize {
     this.addCloseButton = true,
     this.onBackPress,
     this.onClosePress,
-    this.backgroundColor = AppColors.activButtonColor,
+    this.backgroundColor ,
     this.backbuttonColor = AppColors.white,
     this.closeButtonColor = AppColors.white,
     this.textColor,
@@ -42,8 +42,7 @@ class CustomAppbarWidget extends PreferredSize {
         super(
           key: key,
           child: const SizedBox.shrink(),
-          preferredSize:
-              Size.fromHeight(bottom == null ? kToolbarHeight : 98),
+          preferredSize: Size.fromHeight(bottom == null ? kToolbarHeight : 98),
         );
 
   @override
@@ -67,12 +66,13 @@ class CustomAppbarWidget extends PreferredSize {
               onBackTap: onBackPress,
               backbuttonColor: backbuttonColor,
             )
-          : addCloseButton?
-          CustomCloseButton(
-              leading: onCloseLeading,
-              onCloseTap: onClosePress,
-              closeButtonColor: closeButtonColor,
-            ): null,
+          : addCloseButton
+              ? CustomCloseButton(
+                  leading: onCloseLeading,
+                  onCloseTap: onClosePress,
+                  closeButtonColor: closeButtonColor,
+                )
+              : null,
       leadingWidth: 45,
       backgroundColor: backgroundColor,
       title: title == null
@@ -85,7 +85,7 @@ class CustomAppbarWidget extends PreferredSize {
                         (backgroundColor == Colors.white
                             ? AppColors.mineShaft
                             : Colors.white),
-                    fontSize: textSize?? Dimens.fontSize20,
+                    fontSize: textSize ?? Dimens.fontSize20,
                   ),
             ),
     );

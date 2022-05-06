@@ -34,5 +34,5 @@ static String apiKey = dotenv.env['masterApiKey'].toString();
   static const String bankId = 'account_id';
   static const String cardNumber = 'card_number';
   static const String accountNumber = 'account_number';
-  // static const String savedCard = 'savedCard';
+  static const String customColor = 'custom_color';
 }

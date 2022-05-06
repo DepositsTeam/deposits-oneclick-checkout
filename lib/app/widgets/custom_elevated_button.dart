@@ -6,7 +6,8 @@ class CustomElevatedButton extends StatelessWidget {
   final TextStyle? textStyle;
   final double height, minWidth;
   final Widget? titleWidget;
-  final Color buttonColor,buttonBorderColor, textColor, loaderColor;
+  final Color? buttonColor, buttonBorderColor;
+  final Color textColor, loaderColor;
   final bool addBorder;
   final bool isBusy;
 
@@ -17,8 +18,8 @@ class CustomElevatedButton extends StatelessWidget {
     this.textStyle,
     this.height = 55,
     this.minWidth = 100,
-    this.buttonColor = AppColors.activButtonColor,
-    this.buttonBorderColor = AppColors.borderButtonColor,
+    this.buttonColor,
+    this.buttonBorderColor,
     this.textColor = AppColors.black,
     this.loaderColor = AppColors.white,
     this.titleWidget,
@@ -46,21 +47,19 @@ class CustomElevatedButton extends StatelessWidget {
         shape: addBorder
             ? MaterialStateProperty.resolveWith<RoundedRectangleBorder>(
                 (states) => RoundedRectangleBorder(
-                  borderRadius:BorderRadius.circular(2),
+                  borderRadius: BorderRadius.circular(2),
                   side: BorderSide(
-                    color: buttonColor == AppColors.activButtonColor
-                        ? Colors.white
-                        : buttonBorderColor,
+                    color: AppColors.inActivButtonColor(),
                     width: 2,
                   ),
                 ),
               )
             : MaterialStateProperty.resolveWith<RoundedRectangleBorder>(
                 (states) => RoundedRectangleBorder(
-                  borderRadius:BorderRadius.circular(4),
+                  borderRadius: BorderRadius.circular(4),
                 ),
               ),
-            //  AppTheme.theme.textButtonTheme.style!.shape,
+        //  AppTheme.theme.textButtonTheme.style!.shape,
         overlayColor: MaterialStateProperty.resolveWith<Color?>(
           (Set<MaterialState> states) {
             if (states.contains(MaterialState.pressed)) {
@@ -73,30 +72,32 @@ class CustomElevatedButton extends StatelessWidget {
         backgroundColor: MaterialStateProperty.resolveWith<Color>(
           (Set<MaterialState> states) {
             if (states.contains(MaterialState.disabled)) {
-              return buttonColor.withOpacity(.50);
+              return buttonColor!.withOpacity(.50);
             }
-            return  !isBusy? buttonColor : buttonColor.withOpacity(0.6);
+            return !isBusy ? buttonColor! : buttonColor!.withOpacity(0.6);
           },
         ),
       ),
-      child: !isBusy? titleWidget ??
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                title!,
-                style: textStyle ??
-                    AppTextStyle.boldStyle.copyWith(
-                      fontSize: Dimens.fontSize14,
-                      color: buttonColor == Colors.white ||
-                              buttonColor == Colors.transparent || buttonColor == AppColors.declineColor
-                          ? textColor
-                          : Colors.white,
-                    ),
-              ),
-            ],
-          )
-          :  SpinKitFadingCircle(
+      child: !isBusy
+          ? titleWidget ??
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    title!,
+                    style: textStyle ??
+                        AppTextStyle.boldStyle.copyWith(
+                          fontSize: Dimens.fontSize14,
+                          color: buttonColor == Colors.white ||
+                                  buttonColor == Colors.transparent ||
+                                  buttonColor == AppColors.declineColor
+                              ? textColor
+                              : Colors.white,
+                        ),
+                  ),
+                ],
+              )
+          : SpinKitFadingCircle(
               color: loaderColor,
               size: 20,
             ),

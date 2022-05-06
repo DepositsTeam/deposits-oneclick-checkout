@@ -194,17 +194,17 @@ class CardUtils {
         img = 'img_jcb.png';
         break;
       case CardType.Others:
-        icon = const Icon(
+        icon =  Icon(
           Icons.credit_card,
           size: 24.0,
-          color: AppColors.inActivButtonColor,
+          color: AppColors.inActivButtonColor(),
         );
         break;
       default:
-        icon = const Icon(
+        icon = Icon(
            Icons.credit_card,
           size: 40.0,
-          color: AppColors.inActivButtonColor,
+          color: AppColors.inActivButtonColor(),
         );
         break;
     }

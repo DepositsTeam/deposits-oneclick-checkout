@@ -18,6 +18,8 @@ void depositsCheckout(
       fileName:
           'packages/deposits_oneclick_checkout/lib/app/common/assets/.env');
   FingerPrintJs().init();
+  Storage.removeValue(Constants.customColor);
+  Storage.saveValue(Constants.customColor, buttonConfig.buttonColor);
   showModalBottomSheet(
       context: context,
       elevation: 4,
@@ -62,7 +64,7 @@ class PayButtonSheet extends StatefulWidget {
 class _PayButtonSheetState extends State<PayButtonSheet> {
   @override
   Widget build(BuildContext context) {
-    return  Container(
+    return Container(
         padding:
             const EdgeInsets.only(left: 30, right: 30, top: 15, bottom: 15),
         child: Column(
@@ -89,8 +91,8 @@ class _PayButtonSheetState extends State<PayButtonSheet> {
                           titleStyle: const TextStyle(color: AppColors.black),
                           titleOnTap: () {},
                           subtitle: Strings.edit,
-                          subtitleStyle: const TextStyle(
-                              color: AppColors.borderButtonColor),
+                          subtitleStyle:
+                              TextStyle(color: AppColors.borderButtonColor()),
                           subTitleOnTap: () {
                             Navigator.of(context, rootNavigator: true).pop();
                             Utils.navigationPush(
@@ -139,6 +141,7 @@ class _PayWithDepositsButtonState extends State<PayWithDepositsButton> {
   Widget build(BuildContext context) {
     return ElevatedButton(
         onPressed: () {
+          setState(() {
           Storage.removeValue(Constants.amountToProcess);
           Storage.removeValue(Constants.userEmail);
           Storage.removeValue(Constants.subClientApiKey);
@@ -150,15 +153,12 @@ class _PayWithDepositsButtonState extends State<PayWithDepositsButton> {
           Storage.saveValue(Constants.subClientApiKey, widget.subClientApiKey);
           if (Storage.hasData(Constants.isCardAdded)) {
             payController.isPayWithCard.isTrue
-                ? controller.payWithCard(
-                    context, widget.chargFundsResponse)
-                : controller.payWithBank(
-                    context, widget.chargFundsResponse);
+                ? controller.payWithCard(context, widget.chargFundsResponse)
+                : controller.payWithBank(context, widget.chargFundsResponse);
           } else {
-            Utils.navigationPush(
-                context,
-                const Login());
+            Utils.navigationPush(context, const Login());
           }
+          });
         },
         style: ButtonStyle(
           elevation: MaterialStateProperty.all(0),
@@ -173,10 +173,11 @@ class _PayWithDepositsButtonState extends State<PayWithDepositsButton> {
                   (states) => RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(2),
                     side: BorderSide(
-                      color: widget.buttonConfig.buttonColor ==
-                              AppColors.activButtonColor
+                      color: Color(Utils.hexToInt(
+                                  widget.buttonConfig.buttonColor)) ==
+                              AppColors.activButtonColor()
                           ? Colors.white
-                          : widget.buttonConfig.buttonBorderColor,
+                          : widget.buttonConfig.buttonBorderColor!,
                       width: 2,
                     ),
                   ),
@@ -198,11 +199,11 @@ class _PayWithDepositsButtonState extends State<PayWithDepositsButton> {
           backgroundColor: MaterialStateProperty.resolveWith<Color>(
             (Set<MaterialState> states) {
               if (states.contains(MaterialState.disabled)) {
-                return widget.buttonConfig.buttonColor.withOpacity(.50);
+                return Color(Utils.hexToInt(widget.buttonConfig.buttonColor)).withOpacity(.50);
               }
               return !controller.isLoading.value
-                  ? widget.buttonConfig.buttonColor
-                  : widget.buttonConfig.buttonColor.withOpacity(0.6);
+                  ?  Color(Utils.hexToInt(widget.buttonConfig.buttonColor))
+                  :  Color(Utils.hexToInt(widget.buttonConfig.buttonColor)).withOpacity(0.6);
             },
           ),
         ),
@@ -222,16 +223,8 @@ class _PayWithDepositsButtonState extends State<PayWithDepositsButton> {
                             " USD",
                         style: widget.buttonConfig.textStyle ??
                             AppTextStyle.boldStyle.copyWith(
-                              fontSize: Dimens.fontSize14,
-                              color: widget.buttonConfig.buttonColor ==
-                                          Colors.white ||
-                                      widget.buttonConfig.buttonColor ==
-                                          Colors.transparent ||
-                                      widget.buttonConfig.buttonColor ==
-                                          AppColors.declineColor
-                                  ? widget.buttonConfig.textColor
-                                  : Colors.white,
-                            ),
+                                fontSize: Dimens.fontSize14,
+                                color:widget.buttonConfig.textColor),
                       ),
                     ],
                   ),
@@ -244,21 +237,21 @@ class ButtonConfig {
   final TextStyle? textStyle;
   final double height, minWidth;
   final Widget? titleWidget;
-  final Color buttonColor, buttonBorderColor, textColor, loaderColor;
+  final Color? buttonBorderColor;
+  final String buttonColor;
+  final Color textColor, loaderColor;
   final bool addBorder;
-  // final bool isBusy;
 
   const ButtonConfig({
     required this.amount,
     this.textStyle,
     this.height = 55,
     this.minWidth = 100,
-    this.buttonColor = AppColors.activButtonColor,
-    this.buttonBorderColor = AppColors.borderButtonColor,
+    required this.buttonColor,
+    this.buttonBorderColor,
     this.textColor = AppColors.black,
     this.loaderColor = AppColors.white,
     this.titleWidget,
     this.addBorder = false,
-    // this.isBusy = false,
   });
 }
