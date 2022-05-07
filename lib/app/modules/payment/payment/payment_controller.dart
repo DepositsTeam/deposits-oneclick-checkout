@@ -92,30 +92,34 @@ class PaymentsController extends GetxController {
        const AddNewCard());
   }
 
-  void addNewBank(BuildContext context) async {
-    try {
-      isAddBank(true);
-      var request = {
-        'token': Storage.getValue(Constants.token),
-        'api_key': Constants.apiKey,
-        'sub_client_api_key': Storage.getValue(Constants.subClientApiKey)
-      };
-      var response = await DioClient().request(context: context,
-          api: '/get-add-bank-url', method: Method.POST, params: request);
-
-      AddBankResponse addBankResponse = AddBankResponse.fromJson(response);
-      if (addBankResponse.status == Strings.success) {
-        // print('url to load is:' + addBankResponse.data!);//'https://flutter.dev'
-        Utils.launchURL(addBankResponse.data!);
-      } else {
-        return Utils.showSnackbar(
-            context, Strings.error, response['message'], AppColors.red);
-      }
-    } finally {
-      isAddBank(false);
-    }
-    update();
+    void addNewBank(BuildContext context) {
+    Utils.navigationPush(context, const AddBank(pageTitle: 'Add Bank',));
   }
+
+  // void addNewBank(BuildContext context) async {
+  //   try {
+  //     isAddBank(true);
+  //     var request = {
+  //       'token': Storage.getValue(Constants.token),
+  //       'api_key': Constants.apiKey,
+  //       'sub_client_api_key': Storage.getValue(Constants.subClientApiKey)
+  //     };
+  //     var response = await DioClient().request(context: context,
+  //         api: '/get-add-bank-url', method: Method.POST, params: request);
+
+  //     AddBankResponse addBankResponse = AddBankResponse.fromJson(response);
+  //     if (addBankResponse.status == Strings.success) {
+  //       // print('url to load is:' + addBankResponse.data!);//'https://flutter.dev'
+  //       Utils.launchURL(addBankResponse.data!);
+  //     } else {
+  //       return Utils.showSnackbar(
+  //           context, Strings.error, response['message'], AppColors.red);
+  //     }
+  //   } finally {
+  //     isAddBank(false);
+  //   }
+  //   update();
+  // }
 
   removeBank(BuildContext context, String bankId) async {
     try {

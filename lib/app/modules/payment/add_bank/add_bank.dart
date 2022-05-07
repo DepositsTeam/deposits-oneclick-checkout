@@ -4,7 +4,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 class AddBank extends StatefulWidget {
   final String? pageTitle;
-  AddBank({Key? key, this.pageTitle}) : super(key: key);
+  const AddBank({Key? key, this.pageTitle}) : super(key: key);
 
   @override
   State<AddBank> createState() => _AddBankState();

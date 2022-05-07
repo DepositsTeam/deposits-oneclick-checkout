@@ -56,7 +56,7 @@ class CustomTextButton extends StatelessWidget {
                 (states) => RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(23),
                   side: BorderSide(
-                    color: buttonColor == AppColors.activButtonColor
+                    color: buttonColor == AppColors.activButtonColor()
                         ? Colors.white
                         : AppColors.activButtonColor(),
                     width: 2,
