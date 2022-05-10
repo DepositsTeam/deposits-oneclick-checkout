@@ -173,8 +173,7 @@ class _PayWithDepositsButtonState extends State<PayWithDepositsButton> {
                   (states) => RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(2),
                     side: BorderSide(
-                      color: Color(Utils.hexToInt(
-                                  widget.buttonConfig.buttonColor)) ==
+                      color: Color(int.parse("0xFF${widget.buttonConfig.buttonColor}")) ==
                               AppColors.activButtonColor()
                           ? Colors.white
                           : widget.buttonConfig.buttonBorderColor!,
@@ -199,18 +198,18 @@ class _PayWithDepositsButtonState extends State<PayWithDepositsButton> {
           backgroundColor: MaterialStateProperty.resolveWith<Color>(
             (Set<MaterialState> states) {
               if (states.contains(MaterialState.disabled)) {
-                return Color(Utils.hexToInt(widget.buttonConfig.buttonColor)).withOpacity(.50);
+                return Color(int.parse("0xFF${widget.buttonConfig.buttonColor}")).withOpacity(.50);
               }
               return !controller.isLoading.value
-                  ?  Color(Utils.hexToInt(widget.buttonConfig.buttonColor))
-                  :  Color(Utils.hexToInt(widget.buttonConfig.buttonColor)).withOpacity(0.6);
+                  ?  Color(int.parse("0xFF${widget.buttonConfig.buttonColor}"))
+                  :  Color(int.parse("0xFF${widget.buttonConfig.buttonColor}")).withOpacity(0.6);
             },
           ),
         ),
         child: Obx(
           () => controller.isLoading.isTrue
               ? SpinKitFadingCircle(
-                  color: widget.buttonConfig.loaderColor,
+                  color: Color(int.parse("0xFF${widget.buttonConfig.loaderColor}")),
                   size: 20,
                 )
               : widget.buttonConfig.titleWidget ??
@@ -224,7 +223,7 @@ class _PayWithDepositsButtonState extends State<PayWithDepositsButton> {
                         style: widget.buttonConfig.textStyle ??
                             AppTextStyle.boldStyle.copyWith(
                                 fontSize: Dimens.fontSize14,
-                                color:widget.buttonConfig.textColor),
+                                color:Color(int.parse("0xFF${widget.buttonConfig.textColor}"))),
                       ),
                     ],
                   ),
@@ -238,8 +237,7 @@ class ButtonConfig {
   final double height, minWidth;
   final Widget? titleWidget;
   final Color? buttonBorderColor;
-  final String buttonColor;
-  final Color textColor, loaderColor;
+  final String buttonColor,textColor, loaderColor;
   final bool addBorder;
 
   const ButtonConfig({
@@ -247,10 +245,10 @@ class ButtonConfig {
     this.textStyle,
     this.height = 55,
     this.minWidth = 100,
-    required this.buttonColor,
+    this.buttonColor = '0DB9E9',
     this.buttonBorderColor,
-    this.textColor = AppColors.black,
-    this.loaderColor = AppColors.white,
+    this.textColor = '000000',
+    this.loaderColor = 'FFFFFF',
     this.titleWidget,
     this.addBorder = false,
   });

@@ -24,7 +24,7 @@ class _MyHomePageState extends State<MyHomePage> {
   var apiKey = dotenv.env['API_KEY'];
   var envMode = false;
   int id = 1;
-  String radioSelectedColor = 'FF0DB9E9';
+  String radioSelectedColor = '0DB9E9';
 
   @override
   Widget build(BuildContext context) {
@@ -163,7 +163,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             activeColor: Color(int.parse("0xFF0DB9E9")),
                             onChanged: (val) {
                               setState(() {
-                                radioSelectedColor = 'FF0DB9E9';
+                                radioSelectedColor = '0DB9E9';
                                 id = 1;
                               });
                             },
@@ -180,7 +180,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             activeColor: Colors.purple,
                             onChanged: (val) {
                               setState(() {
-                                radioSelectedColor = 'FFA020F0';
+                                radioSelectedColor = 'A020F0';
                                 id = 2;
                               });
                             },
@@ -199,7 +199,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             activeColor: Colors.red,
                             onChanged: (val) {
                               setState(() {
-                                radioSelectedColor = 'FFFF0000';
+                                radioSelectedColor = 'FF0000';
                                 id = 3;
                               });
                             },
@@ -216,7 +216,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: FlatButton(
                       minWidth: MediaQuery.of(context).size.width,
                       height: 56,
-                      color: Color(int.parse("0x$radioSelectedColor")), //Color(0xFF0DB9E9),
+                      color: Color(int.parse("0xFF$radioSelectedColor")), //Color(0xFF0DB9E9),
                       child: const Text('Checkout',
                           style: TextStyle(color: Colors.white, fontSize: 16)),
                       onPressed: () async {
@@ -225,8 +225,9 @@ class _MyHomePageState extends State<MyHomePage> {
                             context,
                             ButtonConfig(
                               buttonColor: radioSelectedColor,
-                              textColor: Colors.white,
-                              // textStyle: const TextStyle(color: Colors.black),
+                              textColor: 'FFFFFF',
+                              loaderColor: 'FFFFFF',
+                              buttonBorderColor: Colors.black,
                               amount: double.parse(amountController.text
                                   .toString()
                                   .replaceAll('\$', '')

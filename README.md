@@ -314,6 +314,8 @@ depositsCheckout(
 context,
 
 ButtonConfig(
+buttonColor: '0xFF0DB9E9'.
+textColor: Colors.white,
 
 amount: double.parse(amountController.text.toString()
 
@@ -375,7 +377,7 @@ To initialize Deposit One Click Checkout SDK in your Flutter app, use the `pay` 
 
   
 
-`pay` offers `context`, `buttonConfig`, `initialScreen`, `envMode`, `chargeFundsResponse` and `userEmail`, `subClientApiKey`. Only `userEmail`, `subClientApiKey`, `envMode`, `chargeFundsResponse` and `buttonConfig` (which has the following params : `amount` required, `textStyle`, `height`, `minwidth` , etc as customizable widgets ) is required. `envMode` is either true or false as a bool and `chargeFundsResponse` is a callback function to manage or run other processes after payment has been made abd you can check if it was successful or not. You have to change your `subClientApiKey` as the `envMode` changes and you can get the Key from the test or live console and the URL to the console is listed in the next section
+`pay` offers `context`, `buttonConfig`, `initialScreen`, `envMode`, `chargeFundsResponse` and `userEmail`, `subClientApiKey`. Only `userEmail`, `subClientApiKey`, `envMode`, `chargeFundsResponse` and `buttonConfig` (which has the following params : `amount` required,`buttonColor` required hexadecimal string , `textStyle`, `height`, `minwidth` , etc as customizable widgets ) is required. `envMode` is either true or false as a bool and `chargeFundsResponse` is a callback function to manage or run other processes after payment has been made abd you can check if it was successful or not. You have to change your `subClientApiKey` as the `envMode` changes and you can get the Key from the test or live console and the URL to the console is listed in the next section
 
   
 

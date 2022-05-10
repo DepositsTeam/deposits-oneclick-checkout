@@ -10,7 +10,7 @@ class AppColors {
     if (storedcolor == null) {
       return const Color(0xFF0DB9E9);
     } else {
-      return Color(Utils.hexToInt(Storage.getValue(Constants.customColor)));
+      return Color(int.parse("0xFF${Storage.getValue(Constants.customColor)}"));
     }
   }
 
@@ -20,7 +20,7 @@ class AppColors {
     if (storedcolor == null) {
       return const Color(0xFFBDF3FC);
     } else {
-      return Color(Utils.hexToInt(Storage.getValue(Constants.customColor)));
+      return Color(int.parse("0xFF${Storage.getValue(Constants.customColor)}"));
     }
   }
 
@@ -30,7 +30,7 @@ class AppColors {
     if (storedcolor == null) {
       return const Color(0xFF4C97FA);
     } else {
-      return Color(Utils.hexToInt(Storage.getValue(Constants.customColor)));
+      return Color(int.parse("0xFF${Storage.getValue(Constants.customColor)}"));
     }
   }
 

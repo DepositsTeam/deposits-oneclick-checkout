@@ -1,5 +1,6 @@
 import 'package:deposits_oneclick_checkout/app/common/utils/exports.dart';
 
+import '../../../model/me/me_response.dart';
 
 class PaymentsController extends GetxController {
   int choice = 0;
@@ -67,8 +68,11 @@ class PaymentsController extends GetxController {
         'sub_client_api_key': Storage.getValue(Constants.subClientApiKey)
       };
       var response = await DioClient().request(
-         context: context, api: '/get-funding-sources', method: Method.POST, params: request);
-       
+          context: context,
+          api: '/get-funding-sources',
+          method: Method.POST,
+          params: request);
+
       GetFundingResponse getFundingResponse =
           GetFundingResponse.fromJson(response);
       if (getFundingResponse.status == Strings.success) {
@@ -87,39 +91,37 @@ class PaymentsController extends GetxController {
   }
 
   void addNewCard(BuildContext context) {
-    Utils.navigationPush(
-        context,
-       const AddNewCard());
+    Utils.navigationPush(context, const AddNewCard());
   }
 
-    void addNewBank(BuildContext context) {
-    Utils.navigationPush(context, const AddBank(pageTitle: 'Add Bank',));
-  }
-
-  // void addNewBank(BuildContext context) async {
-  //   try {
-  //     isAddBank(true);
-  //     var request = {
-  //       'token': Storage.getValue(Constants.token),
-  //       'api_key': Constants.apiKey,
-  //       'sub_client_api_key': Storage.getValue(Constants.subClientApiKey)
-  //     };
-  //     var response = await DioClient().request(context: context,
-  //         api: '/get-add-bank-url', method: Method.POST, params: request);
-
-  //     AddBankResponse addBankResponse = AddBankResponse.fromJson(response);
-  //     if (addBankResponse.status == Strings.success) {
-  //       // print('url to load is:' + addBankResponse.data!);//'https://flutter.dev'
-  //       Utils.launchURL(addBankResponse.data!);
-  //     } else {
-  //       return Utils.showSnackbar(
-  //           context, Strings.error, response['message'], AppColors.red);
-  //     }
-  //   } finally {
-  //     isAddBank(false);
-  //   }
-  //   update();
+  //   void addNewBank(BuildContext context) {
+  //   Utils.navigationPush(context, const AddBank(pageTitle: 'Add Bank',));
   // }
+
+  void addNewBank(BuildContext context) async {
+    try {
+      isAddBank(true);
+      var request = {
+        'token': Storage.getValue(Constants.token),
+        'api_key': Constants.apiKey,
+        'sub_client_api_key': Storage.getValue(Constants.subClientApiKey)
+      };
+      var response = await DioClient().request(
+          context: context, api: '/me', method: Method.POST, params: request);
+
+      MeResponse meResponse = MeResponse.fromJson(response);
+      if (meResponse.status == Strings.success) {
+        Utils.launchURL(
+            'https://api.deposits.dev/api/v1/show-bank-popup/${Constants.apiKey}/${meResponse.data!.user!.id}');
+      } else {
+        return Utils.showSnackbar(
+            context, Strings.error, response['message'], AppColors.red);
+      }
+    } finally {
+      isAddBank(false);
+    }
+    update();
+  }
 
   removeBank(BuildContext context, String bankId) async {
     try {
@@ -131,8 +133,11 @@ class PaymentsController extends GetxController {
         'bank_id': bankId
       };
 
-      var response = await DioClient().request(context: context,
-          api: '/delete-funding-source', method: Method.POST, params: request);
+      var response = await DioClient().request(
+          context: context,
+          api: '/delete-funding-source',
+          method: Method.POST,
+          params: request);
 
       DeleteFundSourceResponse deleteFundSourceResponse =
           DeleteFundSourceResponse.fromJson(response);
@@ -160,8 +165,11 @@ class PaymentsController extends GetxController {
         'card_id': cardId
       };
 
-      var response = await DioClient().request(context: context,
-          api: '/delete-funding-source', method: Method.POST, params: request);
+      var response = await DioClient().request(
+          context: context,
+          api: '/delete-funding-source',
+          method: Method.POST,
+          params: request);
 
       DeleteFundSourceResponse deleteFundSourceResponse =
           DeleteFundSourceResponse.fromJson(response);
