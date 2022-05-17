@@ -2,30 +2,22 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:dio/dio.dart';
 import 'package:deposits_oneclick_checkout/app/common/utils/exports.dart';
 
-
 class Utils {
-  static Future navigationReplace(
-    BuildContext context, 
-    Widget screen
-    ) async {
+  static Future navigationReplace(BuildContext context, Widget screen) async {
     return await Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-          settings: RouteSettings(name: '/${screen.toStringShort()}'),
-          builder: (context) => screen));
+        context,
+        MaterialPageRoute(
+            settings: RouteSettings(name: '/${screen.toStringShort()}'),
+            builder: (context) => screen));
   }
 
-  static void navigationPush(
-    BuildContext context, 
-    Widget screen,
-    {VoidCallback? onComplete}
-    ) async {
+  static void navigationPush(BuildContext context, Widget screen,
+      {VoidCallback? onComplete}) async {
     return await Navigator.push(
-      context,
-      MaterialPageRoute(
+        context,
+        MaterialPageRoute(
             settings: RouteSettings(name: '/${screen.toStringShort()}'),
-            builder: (context) => screen))
-        .then((value) => onComplete);
+            builder: (context) => screen)).then((value) => onComplete);
   }
 
   static void showSnackbar(BuildContext context, String title, String message,
@@ -89,7 +81,7 @@ class Utils {
   }
 
   static Widget loader() {
-    return  Center(
+    return Center(
       child: SpinKitFadingCircle(
         color: AppColors.activButtonColor(),
         size: 20,
@@ -160,23 +152,23 @@ class Utils {
     if (error is DioError) {
       switch (error.type) {
         case DioErrorType.cancel:
-          errorDescription = "Request to API server was cancelled";
+          errorDescription = "Request to server was cancelled";
           break;
         case DioErrorType.connectTimeout:
-          errorDescription = "Connection timeout with API server";
+          errorDescription = "Connection timeout. Please try again!.";
           break;
         case DioErrorType.other:
           errorDescription =
-              "Connection to API server failed due to internet connection";
+              "Connection to server failed due to internet connection";
           break;
         case DioErrorType.receiveTimeout:
-          errorDescription = "Receive timeout in connection with API server";
+          errorDescription = "Receive timeout in connection with server";
           break;
         case DioErrorType.response:
           errorDescription = "${error.response?.data['message']}";
           break;
         case DioErrorType.sendTimeout:
-          errorDescription = "Send timeout in connection with API server";
+          errorDescription = "Send timeout in connection with server";
           break;
       }
     } else {
@@ -187,15 +179,19 @@ class Utils {
 
   static launchURL(String url) async {
     if (await canLaunch(url)) {
-      await launch(url, forceWebView: true);
+      await launch(url);
     } else {
       throw 'Could not launch $url';
     }
   }
 
+  static Color hexToInt(String hex) {
+    return Color(int.parse("0xFF$hex"));
+  }
+
 // static int hexToInt(String hex) {
 //     int val = 0;
-//     int len = hex.length;
+//     int len = ('0xFF'+hex).length;
 //     for (int i = 0; i < len; i++) {
 //       int hexDigit = hex.codeUnitAt(i);
 //       if (hexDigit >= 48 && hexDigit <= 57) {

@@ -72,17 +72,24 @@ class PaymentsController extends GetxController {
           api: '/get-funding-sources',
           method: Method.POST,
           params: request);
-
-      GetFundingResponse getFundingResponse =
-          GetFundingResponse.fromJson(response);
-      if (getFundingResponse.status == Strings.success) {
-        allCards = getFundingResponse.data!.cards!.obs;
-        allBankAccounts = getFundingResponse.data!.bankAccounts!.obs;
-      } else {
-        isError(true);
-        errorMessage.value = response['message'].toString().toTitleCase();
-        return Utils.showSnackbar(
-            context, Strings.error, response['message'], AppColors.red);
+      if (response != null) {
+        GetFundingResponse getFundingResponse =
+            GetFundingResponse.fromJson(response);
+        if (getFundingResponse.status == Strings.success) {
+          allCards = getFundingResponse.data!.cards!.obs;
+          allBankAccounts = getFundingResponse.data!.bankAccounts!.obs;
+          isError(false);
+        } else {
+          isError(true);
+          errorMessage.value = response['message'].toString().toTitleCase();
+          if (errorMessage.value == 'Token Not Valid') {
+            Utils.navigationReplace(context, const Login());
+            return Utils.showSnackbar(context, Strings.error,
+                'Token has expired please login again!.', AppColors.red);
+          }
+          return Utils.showSnackbar(
+              context, Strings.error, response['message'], AppColors.red);
+        }
       }
     } finally {
       isLoading(false);
@@ -111,8 +118,10 @@ class PaymentsController extends GetxController {
 
       MeResponse meResponse = MeResponse.fromJson(response);
       if (meResponse.status == Strings.success) {
-        Utils.launchURL(
-            'https://api.deposits.dev/api/v1/show-bank-popup/${Constants.apiKey}/${meResponse.data!.user!.id}');
+        String url =
+            'https://api.deposits.dev/api/v1/show-bank-popup/${Constants.apiKey}/${meResponse.data!.user!.id}';
+        // print(url);
+        Utils.launchURL(url);
       } else {
         return Utils.showSnackbar(
             context, Strings.error, response['message'], AppColors.red);

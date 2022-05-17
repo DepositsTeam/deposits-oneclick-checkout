@@ -10,17 +10,17 @@ class LoginController extends GetxController {
   final emailController = TextEditingController();
   //--------------------------------------
   void termsOnClick() {
-    // debugPrint('You clicked on terms');
+    Utils.launchURL('https://content.deposits.com/terms');
   }
 
   //--------------------------------------
   void policyOnClick() {
-    // debugPrint('You clicked on terms');
+    Utils.launchURL('https://content.deposits.com/privacy');
   }
 
   //--------------------------------------
   void cookieOnClick() {
-    // debugPrint('You clicked on terms');
+    Utils.launchURL('https://content.deposits.com/privacy');
   }
 
   //--------------------------------------
@@ -55,8 +55,7 @@ class LoginController extends GetxController {
           final String message = respJson['message'] as String;
           if (status == Strings.success) {
             isLoading(false);
-            Utils.navigationReplace(
-                context, const ConfirmOtp());
+            Utils.navigationReplace(context, const ConfirmOtp());
             Utils.showSnackbar(
                 context, Strings.success, message, AppColors.green);
           } else {

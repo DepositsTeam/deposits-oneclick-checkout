@@ -109,15 +109,16 @@ class _PaymentsState extends State<Payments>with WidgetsBindingObserver  {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Utils.getCardImage(controller
-                          .allCards[i].metaDataJson!.issuer![0].brand!),
+                          .allCards[i].metaDataJson!.issuer!.isEmpty?'Not Available': controller
+                                  .allCards[i].metaDataJson!.issuer![0].brand!),
                       horizontalSpaceSmall,
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            controller.allCards[i].metaDataJson!.issuer![0]
-                                    .brand! +
-                                " *" +
+                            controller.allCards[i].metaDataJson!.issuer!.isEmpty?"": controller.allCards[i].metaDataJson!
+                                        .issuer![0].brand!  
+                            +" *" +
                                 controller
                                     .allCards[i].metaDataJson!.expiration!,
                             style: const TextStyle(

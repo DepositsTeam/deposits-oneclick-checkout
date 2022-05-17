@@ -78,8 +78,8 @@ class _LoginState extends State<Login> {
 //--------------------------------------------------------
   Widget loginDesc() {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: (15)),
-      child: CustomText(
+      margin: const EdgeInsets.symmetric(vertical: (15)),
+      child: const CustomText(
         text: Strings.loginDesc,
         font: (Dimens.fontSize14),
         fntweight: FontWeight.w400,
@@ -90,7 +90,7 @@ class _LoginState extends State<Login> {
 //--------------------------------------------------------
   Widget loginInput() {
     return Container(
-        margin: EdgeInsets.symmetric(vertical: (15)),
+        margin:const EdgeInsets.symmetric(vertical: (15)),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           const CustomText(
               text: Strings.emailOrPhone,
@@ -114,8 +114,8 @@ class _LoginState extends State<Login> {
     return Container(
       color: AppColors.saveInfoContainerColor,
       height: (50),
-      margin: EdgeInsets.symmetric(vertical: (7)),
-      padding: EdgeInsets.symmetric(vertical: (10), horizontal: (10)),
+      margin: const EdgeInsets.symmetric(vertical: (7)),
+      padding:const EdgeInsets.symmetric(vertical: (10), horizontal: (10)),
       child: Row(
         children: [
           SvgPicture.asset(
@@ -125,7 +125,7 @@ class _LoginState extends State<Login> {
             height: (15),
           ),
           horizontalSpaceSmall,
-          CustomText(
+          const CustomText(
             text: Strings.saveInfoLater,
             font: (Dimens.fontSize14),
             fntweight: FontWeight.w400,

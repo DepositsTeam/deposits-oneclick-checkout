@@ -15,17 +15,21 @@ class ConfirmOtpController extends GetxController {
 
   Future<void> fetchfundingSources(BuildContext context) async {
     try {
-       isLoading(true);
+      isLoading(true);
       offStageRequestButton(true);
       var request = {
         'token': Storage.getValue(Constants.token),
         'api_key': Constants.apiKey,
         'sub_client_api_key': Storage.getValue(Constants.subClientApiKey)
       };
-      var response = await DioClient().request(context: context,
-          api: '/get-funding-sources', method: Method.POST, params: request);
+      var response = await DioClient().request(
+          context: context,
+          api: '/get-funding-sources',
+          method: Method.POST,
+          params: request);
 
-      GetFundingResponse getFundingResponse = GetFundingResponse.fromJson(response);
+      GetFundingResponse getFundingResponse =
+          GetFundingResponse.fromJson(response);
       if (getFundingResponse.status == Strings.success) {
         var allCards = getFundingResponse.data!.cards!.obs;
         if (allCards.isNotEmpty) {
@@ -34,40 +38,43 @@ class ConfirmOtpController extends GetxController {
               primaryCard.value = card;
               Storage.removeValue(Constants.cardNumber);
               Storage.removeValue(Constants.cardId);
-              Storage.saveValue(Constants.cardNumber,
-                  primaryCard.value.metaDataJson!.maskedCardNumber!);
+              Storage.saveValue(Constants.isCardAdded, true);
               Storage.saveValue(
                   Constants.cardId, primaryCard.value.id.toString());
-              Storage.saveValue(Constants.isCardAdded, true);
+              Storage.saveValue(Constants.cardNumber,
+                  primaryCard.value.metaDataJson!.maskedCardNumber!);
               Utils.navigationReplace(
-              context, Successful(
-                  successTitle: 'Cards fetched Successfully',
-                  successMessage: DateFormat.jm().format(
-                      DateTime.parse(DateTime.now().toString()).toLocal()),));
+                  context,
+                  Successful(
+                    successTitle: 'Cards fetched Successfully',
+                    successMessage: DateFormat.jm().format(
+                        DateTime.parse(DateTime.now().toString()).toLocal()),
+                  ));
             } else {
               primaryCard.value = allCards.first;
               Storage.removeValue(Constants.cardNumber);
               Storage.removeValue(Constants.cardId);
+              Storage.saveValue(Constants.isCardAdded, true);
               Storage.saveValue(Constants.cardNumber,
                   allCards.first.metaDataJson!.maskedCardNumber!);
               Storage.saveValue(Constants.cardId, allCards.first.id.toString());
-              Storage.saveValue(Constants.isCardAdded, true);
               Utils.navigationReplace(
-              context,Successful(
-                  successTitle: 'Cards fetched Successfully',
-                  successMessage: DateFormat.jm().format(
-                      DateTime.parse(DateTime.now().toString()).toLocal()),));
+                  context,
+                  Successful(
+                    successTitle: 'Cards fetched Successfully',
+                    successMessage: DateFormat.jm().format(
+                        DateTime.parse(DateTime.now().toString()).toLocal()),
+                  ));
             }
           }
-        }else{
-           Utils.navigationReplace(
-              context, const PayWithBankCard());
+        } else {
+          Utils.navigationReplace(context, const PayWithBankCard());
           Utils.showSnackbar(context, Strings.success,
               getFundingResponse.message!, AppColors.green);
         }
       } else {
-        return Utils.showSnackbar(
-            context, Strings.error, response['message'].toString().toTitleCase(), AppColors.red);
+        return Utils.showSnackbar(context, Strings.error,
+            response['message'].toString().toTitleCase(), AppColors.red);
       }
     } finally {
       isLoading(false);
@@ -91,8 +98,11 @@ class ConfirmOtpController extends GetxController {
         'sub_client_api_key': Storage.getValue(Constants.subClientApiKey)
       };
 
-      var response = await DioClient()
-          .request(context: context,api: '/verify-user', method: Method.POST, params: request);
+      var response = await DioClient().request(
+          context: context,
+          api: '/verify-user',
+          method: Method.POST,
+          params: request);
 
       VerifyUserResponse verifyUserResponse =
           VerifyUserResponse.fromJson(response);
@@ -103,8 +113,8 @@ class ConfirmOtpController extends GetxController {
       } else {
         isLoading(false);
         offStageRequestButton(false);
-        return Utils.showSnackbar(
-            context, Strings.error, response['message'].toString().toTitleCase(), AppColors.red);
+        return Utils.showSnackbar(context, Strings.error,
+            response['message'].toString().toTitleCase(), AppColors.red);
       }
     }
   }
@@ -120,8 +130,11 @@ class ConfirmOtpController extends GetxController {
         'sub_client_api_key': Storage.getValue(Constants.subClientApiKey)
       };
 
-      var response = await DioClient()
-          .request(context: context,api: '/resend-otp', method: Method.POST, params: request);
+      var response = await DioClient().request(
+          context: context,
+          api: '/resend-otp',
+          method: Method.POST,
+          params: request);
 
       ResendOtpResponse resendOtpResponse =
           ResendOtpResponse.fromJson(response);
@@ -129,20 +142,20 @@ class ConfirmOtpController extends GetxController {
         Utils.showSnackbar(context, Strings.success, resendOtpResponse.message!,
             AppColors.green);
       } else {
-        return Utils.showSnackbar(
-            context, Strings.error, response['message'].toString().toTitleCase(), AppColors.red);
+        return Utils.showSnackbar(context, Strings.error,
+            response['message'].toString().toTitleCase(), AppColors.red);
       }
     } on DioError catch (e) {
       return Utils.showSnackbar(context, Strings.error,
           Utils.handleErrorComing(e).toTitleCase(), Colors.red);
-      } catch (e) {
-        isLoading(false);
-        return Utils.showSnackbar(context, Strings.error,
-          e.toString().toTitleCase(), Colors.red);
-      }finally {
-        isResendLoading(false);
-        offStageAuthoriseButton(false);
-      }
+    } catch (e) {
+      isLoading(false);
+      return Utils.showSnackbar(
+          context, Strings.error, e.toString().toTitleCase(), Colors.red);
+    } finally {
+      isResendLoading(false);
+      offStageAuthoriseButton(false);
+    }
     update();
   }
 }

@@ -92,15 +92,16 @@ class _PayButtonSheetState extends State<PayButtonSheet> {
                           titleOnTap: () {},
                           subtitle: Strings.edit,
                           subtitleStyle:
-                              TextStyle(color: AppColors.borderButtonColor()),
+                              TextStyle(color: Utils.hexToInt(
+                                  widget.buttonConfig.buttonColor)),
                           subTitleOnTap: () {
-                            Navigator.of(context, rootNavigator: true).pop();
+                            Storage.saveValue(Constants.customColor,
+                                widget.buttonConfig.buttonColor);
+                            Navigator.pop(context);
+                            //Navigator.of(context, rootNavigator: true).pop();
                             Utils.navigationPush(
                               context,
-                              const ManageDepositID(),
-                              onComplete: () {
-                                setState(() {});
-                              },
+                              const ManageDepositID()
                             );
                           },
                         ),
@@ -142,22 +143,24 @@ class _PayWithDepositsButtonState extends State<PayWithDepositsButton> {
     return ElevatedButton(
         onPressed: () {
           setState(() {
-          Storage.removeValue(Constants.amountToProcess);
-          Storage.removeValue(Constants.userEmail);
-          Storage.removeValue(Constants.subClientApiKey);
-          Storage.removeValue(Constants.envMode);
-          Storage.saveValue(Constants.amountToProcess,
-              widget.buttonConfig.amount.toStringAsFixed(2));
-          Storage.saveValue(Constants.envMode, widget.envMode);
-          Storage.saveValue(Constants.userEmail, widget.userEmail);
-          Storage.saveValue(Constants.subClientApiKey, widget.subClientApiKey);
-          if (Storage.hasData(Constants.isCardAdded)) {
-            payController.isPayWithCard.isTrue
-                ? controller.payWithCard(context, widget.chargFundsResponse)
-                : controller.payWithBank(context, widget.chargFundsResponse);
-          } else {
-            Utils.navigationPush(context, const Login());
-          }
+            Storage.removeValue(Constants.amountToProcess);
+            Storage.removeValue(Constants.userEmail);
+            Storage.removeValue(Constants.subClientApiKey);
+            Storage.removeValue(Constants.envMode);
+            Storage.saveValue(Constants.amountToProcess,
+                widget.buttonConfig.amount.toStringAsFixed(2));
+            Storage.saveValue(Constants.envMode, widget.envMode);
+            Storage.saveValue(Constants.userEmail, widget.userEmail);
+            Storage.saveValue(
+                Constants.subClientApiKey, widget.subClientApiKey);
+            if (Storage.hasData(Constants.isCardAdded)) {
+              payController.isPayWithCard.isTrue
+                  ? controller.payWithCard(context, widget.chargFundsResponse)
+                  : controller.payWithBank(context, widget.chargFundsResponse);
+            } else {
+              Navigator.pop(context);
+              Utils.navigationPush(context, const Login());
+            }
           });
         },
         style: ButtonStyle(
@@ -173,7 +176,8 @@ class _PayWithDepositsButtonState extends State<PayWithDepositsButton> {
                   (states) => RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(2),
                     side: BorderSide(
-                      color: Color(int.parse("0xFF${widget.buttonConfig.buttonColor}")) ==
+                      //Color(int.parse("0xFF${widget.buttonConfig.buttonColor}"))
+                      color: Utils.hexToInt(widget.buttonConfig.buttonColor) ==
                               AppColors.activButtonColor()
                           ? Colors.white
                           : widget.buttonConfig.buttonBorderColor!,
@@ -198,18 +202,24 @@ class _PayWithDepositsButtonState extends State<PayWithDepositsButton> {
           backgroundColor: MaterialStateProperty.resolveWith<Color>(
             (Set<MaterialState> states) {
               if (states.contains(MaterialState.disabled)) {
-                return Color(int.parse("0xFF${widget.buttonConfig.buttonColor}")).withOpacity(.50);
+                // return Color(int.parse("0xFF${widget.buttonConfig.buttonColor}")).withOpacity(.50);
+                return Utils.hexToInt(widget.buttonConfig.buttonColor)
+                    .withOpacity(.50);
               }
               return !controller.isLoading.value
-                  ?  Color(int.parse("0xFF${widget.buttonConfig.buttonColor}"))
-                  :  Color(int.parse("0xFF${widget.buttonConfig.buttonColor}")).withOpacity(0.6);
+                  ? Utils.hexToInt(widget.buttonConfig.buttonColor)
+                  : Utils.hexToInt(widget.buttonConfig.buttonColor)
+                      .withOpacity(0.6);
+              // ?  Color(int.parse("0xFF${widget.buttonConfig.buttonColor}"))
+              // :  Color(int.parse("0xFF${widget.buttonConfig.buttonColor}")).withOpacity(0.6);
             },
           ),
         ),
         child: Obx(
           () => controller.isLoading.isTrue
               ? SpinKitFadingCircle(
-                  color: Color(int.parse("0xFF${widget.buttonConfig.loaderColor}")),
+                  color: Utils.hexToInt(widget.buttonConfig
+                      .loaderColor), //Color(int.parse("0xFF${widget.buttonConfig.loaderColor}")),
                   size: 20,
                 )
               : widget.buttonConfig.titleWidget ??
@@ -223,7 +233,9 @@ class _PayWithDepositsButtonState extends State<PayWithDepositsButton> {
                         style: widget.buttonConfig.textStyle ??
                             AppTextStyle.boldStyle.copyWith(
                                 fontSize: Dimens.fontSize14,
-                                color:Color(int.parse("0xFF${widget.buttonConfig.textColor}"))),
+                                color: Utils.hexToInt(widget.buttonConfig
+                                    .textColor) //Color(int.parse("0xFF${widget.buttonConfig.textColor}"))
+                                ),
                       ),
                     ],
                   ),
@@ -237,7 +249,7 @@ class ButtonConfig {
   final double height, minWidth;
   final Widget? titleWidget;
   final Color? buttonBorderColor;
-  final String buttonColor,textColor, loaderColor;
+  final String buttonColor, textColor, loaderColor;
   final bool addBorder;
 
   const ButtonConfig({
@@ -245,7 +257,7 @@ class ButtonConfig {
     this.textStyle,
     this.height = 55,
     this.minWidth = 100,
-    this.buttonColor = '0DB9E9',
+    required this.buttonColor,
     this.buttonBorderColor,
     this.textColor = '000000',
     this.loaderColor = 'FFFFFF',
