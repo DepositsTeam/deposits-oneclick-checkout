@@ -1,6 +1,7 @@
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:deposits_oneclick_checkout/app/modules/deposits_oneclick_checkout_button.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -23,14 +24,21 @@ class _MyHomePageState extends State<MyHomePage> {
   bool isSwitched = false;
   var apiKey = dotenv.env['API_KEY'];
   var envMode = false;
-  int id = 1;
-  String radioSelectedColor = '0DB9E9';
+
+  Color pickerColor = const Color(0xFF0DB9E9);
+  Color currentColor = const Color(0xFF0DB9E9);
+  ValueChanged<Color>? onColorChanged;
+  // bind some values with [ValueChanged<Color>] callback
+  changeColor(Color color) {
+    setState(() => pickerColor = color);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
+        backgroundColor: pickerColor,
         title: Text(widget.title),
       ),
       body: SingleChildScrollView(
@@ -122,7 +130,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       FlutterSwitch(
                         value: isSwitched,
-                        activeColor: Colors.green,
+                        activeColor: pickerColor,
                         showOnOff: true,
                         onToggle: (value) {
                           setState(() {
@@ -145,88 +153,56 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(top: (15.0)),
-                  child: const Text(
-                    'SELECT CUSTOMIZATION COLOR',
-                    style: TextStyle(color: Colors.black, fontSize: 16),
-                  ),
-                  ),
-                Container(
                   margin: const EdgeInsets.only(top: (2.0)),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(children: [
-                        Radio(
-                            value: 1,
-                            groupValue: id,
-                            activeColor: Color(int.parse("0xFF0DB9E9")),
-                            onChanged: (val) {
-                              setState(() {
-                                radioSelectedColor = '0DB9E9';
-                                id = 1;
-                              });
-                            },
-                          ),
-                          const Text(
-                            'BLUE',
-                            style: TextStyle(fontSize: 17.0),
-                          ),
-                      ],),
-                      Row(children: [
-                          Radio(
-                            value: 2,
-                            groupValue: id,
-                            activeColor: Colors.purple,
-                            onChanged: (val) {
-                              setState(() {
-                                radioSelectedColor = 'A020F0';
-                                id = 2;
-                              });
-                            },
-                          ),
-                          const Text(
-                            'PURPLE',
-                            style:  TextStyle(
-                              fontSize: 17.0,
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      elevation: MaterialStateProperty.all(0),
+                       backgroundColor: MaterialStateProperty.all(pickerColor),
+                    ),
+                    onPressed: () {
+                      // raise the [showDialog] widget
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) => AlertDialog(
+                          title: const Text('Pick a color!'),
+                          content: SingleChildScrollView(
+                            child: ColorPicker(
+                              pickerColor: pickerColor,
+                              onColorChanged: changeColor,
+                              pickerAreaHeightPercent: 0.8,
                             ),
                           ),
-                        ],),
-                      Row(children: [
-                          Radio(
-                            value: 3,
-                            groupValue: id,
-                            activeColor: Colors.red,
-                            onChanged: (val) {
-                              setState(() {
-                                radioSelectedColor = 'FF0000';
-                                id = 3;
-                              });
-                            },
-                          ),
-                         const Text(
-                            'RED',
-                            style:  TextStyle(fontSize: 17.0),
-                          ),
-                        ],),
-                    ],
+                          actions: <Widget>[
+                            FlatButton(
+                              child:const Text('Got it'),
+                              onPressed: () {
+                                setState(() => currentColor = pickerColor);
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                    child:const Text('SELECT CUSTOMIZATION COLOR'),
                   ),
                 ),
                 Container(
                     child: FlatButton(
                       minWidth: MediaQuery.of(context).size.width,
                       height: 56,
-                      color: Color(int.parse("0xFF$radioSelectedColor")), //Color(0xFF0DB9E9),
+                      color: pickerColor, //Color(0xFF0DB9E9),
                       child: const Text('Checkout',
                           style: TextStyle(color: Colors.white, fontSize: 16)),
                       onPressed: () async {
+                        String selectedColor = pickerColor.toString().replaceAll('Color(0xf', '').replaceAll(')', '');
                         if (formKey.currentState!.validate()) {
                           depositsCheckout(
                             context,
                             ButtonConfig(
-                              buttonColor: radioSelectedColor,
+                              buttonColor: selectedColor,
                               textColor: 'FFFFFF',
-                              loaderColor: 'FFFFFF',
+                              // loaderColor: 'FFFFFF',
                               buttonBorderColor: Colors.black,
                               amount: double.parse(amountController.text
                                   .toString()
