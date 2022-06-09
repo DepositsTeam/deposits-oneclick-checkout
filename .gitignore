@@ -29,5 +29,3 @@
 .dart_tool/
 .packages
 build/
-packages/deposits_oneclick_checkout/lib/app/common/assets/.env
-lib/app/common/assets/.env
