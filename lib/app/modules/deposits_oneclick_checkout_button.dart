@@ -16,7 +16,7 @@ void depositsCheckout(
   GetStorage.init();
   await dotenv.load(
       fileName:
-          'packages/deposits_oneclick_checkout/lib/app/common/assets/one_click_env');
+          'packages/deposits_oneclick_checkout/lib/app/common/assets/.env');
   FingerPrintJs().init();
   Storage.removeValue(Constants.customColor);
   Storage.saveValue(Constants.customColor, buttonConfig.buttonColor);

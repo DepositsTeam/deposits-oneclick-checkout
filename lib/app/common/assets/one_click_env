@@ -1,5 +1,0 @@
-apiMapKey = "AIzaSyAzgCo4lQaehoNsb7LlrunTkOBkZqOE4Fc";
-fingerPrintJsApiKey = vZOLWDQeWgM0iZV7t1sV
-stagingBaseUrl=https://api.checkout.deposits.dev/api/v1
-prodBaseUrl=https://api.checkout.deposits.com/api/v1
-masterApiKey=one-click-checkout
