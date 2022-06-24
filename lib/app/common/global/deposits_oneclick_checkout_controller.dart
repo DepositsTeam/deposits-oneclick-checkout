@@ -2,10 +2,9 @@ import 'package:deposits_oneclick_checkout/app/common/utils/exports.dart';
 
 class PayWithDepositsController extends GetxController {
   final isLoading = false.obs;
-  ChargeFundResponse finalChargeFundResponse = ChargeFundResponse();
+  var finalChargeFundResponse = ChargeFundResponse().obs;
 
-  payWithCard(BuildContext context,
-      ValueChanged<ChargeFundResponse>? chargeFundResponse) async {
+  payWithCard(BuildContext context) async {
     try {
       isLoading(true);
       var visitorId = await FingerPrintJs().getVisitorId();
@@ -26,24 +25,24 @@ class PayWithDepositsController extends GetxController {
         'card_id': Storage.getValue(Constants.cardId),
         'meta': meta
       };
-      // print(request);
+      print(request);
       var response = await DioClient().request(
           context: context,
           api: '/charge-funding-source',
           method: Method.POST,
           params: request);
+      print(response.toString());
       if (response != null) {
         ChargeFundResponse chargeFundResponse =
             ChargeFundResponse.fromJson(response);
         if (chargeFundResponse.status == Strings.success) {
-          chargeFundResponse = chargeFundResponse;
-          finalChargeFundResponse = chargeFundResponse;
           Utils.navigationReplace(
             context,
             Successful(
                 successTitle: Strings.paymentSuccessful,
                 successMessage: Strings.paymentSuccessmgs),
           );
+           finalChargeFundResponse = chargeFundResponse.obs;
         } else {
           if (response['message'].toString().toTitleCase() == 'Token Not Valid') {
             Utils.navigationReplace(context, const Login());
@@ -60,8 +59,7 @@ class PayWithDepositsController extends GetxController {
     update();
   }
 
-  payWithBank(BuildContext context,
-      ValueChanged<ChargeFundResponse>? chargeFundResponse) async {
+  payWithBank(BuildContext context) async {
     try {
       isLoading(true);
       var visitorId = await FingerPrintJs().getVisitorId();
@@ -91,8 +89,6 @@ class PayWithDepositsController extends GetxController {
         ChargeFundResponse chargeFundResponse =
             ChargeFundResponse.fromJson(response);
         if (chargeFundResponse.status == Strings.success) {
-          chargeFundResponse = chargeFundResponse;
-          finalChargeFundResponse = chargeFundResponse;
           Utils.navigationReplace(
             context,
             Successful(
@@ -100,6 +96,7 @@ class PayWithDepositsController extends GetxController {
               successMessage: Strings.paymentSuccessmgs,
             ),
           );
+           finalChargeFundResponse = chargeFundResponse.obs;
         } else {
           if (response['message'].toString().toTitleCase() == 'Token Not Valid') {
             Utils.navigationReplace(context, const Login());

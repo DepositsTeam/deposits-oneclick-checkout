@@ -38,7 +38,7 @@ void depositsCheckout(
           chargeFundsResponse: chargeFundsResponse,
         );
       }).whenComplete(() {
-    chargeFundsResponse!(controller.finalChargeFundResponse);
+    chargeFundsResponse!(controller.finalChargeFundResponse.value);
   });
 }
 
@@ -155,8 +155,8 @@ class _PayWithDepositsButtonState extends State<PayWithDepositsButton> {
                 Constants.subClientApiKey, widget.subClientApiKey);
             if (Storage.hasData(Constants.isCardAdded)) {
               payController.isPayWithCard.isTrue
-                  ? controller.payWithCard(context, widget.chargFundsResponse)
-                  : controller.payWithBank(context, widget.chargFundsResponse);
+                  ? controller.payWithCard(context)
+                  : controller.payWithBank(context);
             } else {
               Navigator.pop(context);
               Utils.navigationPush(context, const Login());

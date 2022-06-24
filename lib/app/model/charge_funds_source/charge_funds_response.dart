@@ -36,22 +36,26 @@ class ChargeFundData {
     ChargeFundData({
         this.amount,
         this.merchantName,
+        this.reference,
         this.transactionId,
     });
 
     String? amount;
     String? merchantName;
+    String? reference;
     String? transactionId;
 
     factory ChargeFundData.fromJson(Map<String, dynamic> json) => ChargeFundData(
         amount: json["amount"],
         merchantName: json["merchant_name"],
+        reference :json["reference"],
         transactionId: json["transaction_id"],
     );
 
     Map<String, dynamic> toJson() => {
         "amount": amount,
         "merchant_name": merchantName,
+        "reference": reference,
         "transaction_id": transactionId
     };
 }
