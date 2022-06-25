@@ -48,10 +48,11 @@ class PayWithDepositsController extends GetxController {
             Utils.navigationReplace(context, const Login());
             return Utils.showSnackbar(context, Strings.error,
                 'Token has expired please login again!.', AppColors.red);
-          }
+          }else{
           return Utils.showSnackbar(
               context, Strings.error, response['message'].toString().toTitleCase(), AppColors.red);
         }
+      }
       }
     } finally {
       isLoading(false);
@@ -102,9 +103,10 @@ class PayWithDepositsController extends GetxController {
             Utils.navigationReplace(context, const Login());
             return Utils.showSnackbar(context, Strings.error,
                 'Token has expired please login again!.', AppColors.red);
-          }
+          }else{
           return Utils.showSnackbar(
               context, Strings.error, response['message'].toString().toTitleCase(), AppColors.red);
+        }
         }
       }
     } finally {
