@@ -91,18 +91,16 @@ class _PayButtonSheetState extends State<PayButtonSheet> {
                           titleStyle: const TextStyle(color: AppColors.black),
                           titleOnTap: () {},
                           subtitle: Strings.edit,
-                          subtitleStyle:
-                              TextStyle(color: Utils.hexToInt(
+                          subtitleStyle: TextStyle(
+                              color: Utils.hexToInt(
                                   widget.buttonConfig.buttonColor)),
-                          subTitleOnTap: () {
+                          subTitleOnTap: () async {
                             Storage.saveValue(Constants.customColor,
                                 widget.buttonConfig.buttonColor);
                             Navigator.pop(context);
                             //Navigator.of(context, rootNavigator: true).pop();
                             Utils.navigationPush(
-                              context,
-                              const ManageDepositID()
-                            );
+                                context, const ManageDepositID());
                           },
                         ),
                       ),
@@ -158,7 +156,13 @@ class _PayWithDepositsButtonState extends State<PayWithDepositsButton> {
                   ? controller.payWithCard(context)
                   : controller.payWithBank(context);
             } else {
-              Navigator.pop(context);
+              // Navigator.of(context).pop();
+              // showDialog(
+              //     context: context,
+              //     useRootNavigator: false,
+              //     builder: (context) {
+              //       return const Login();
+              //     });
               Utils.navigationPush(context, const Login());
             }
           });
@@ -257,7 +261,7 @@ class ButtonConfig {
     this.textStyle,
     this.height = 55,
     this.minWidth = 100,
-    required this.buttonColor,
+    this.buttonColor = '0DB9E9',
     this.buttonBorderColor,
     this.textColor = '000000',
     this.loaderColor = 'FFFFFF',

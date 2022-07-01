@@ -25,13 +25,13 @@ class PayWithDepositsController extends GetxController {
         'card_id': Storage.getValue(Constants.cardId),
         'meta': meta
       };
-      print(request);
+      // print(request);
       var response = await DioClient().request(
           context: context,
           api: '/charge-funding-source',
           method: Method.POST,
           params: request);
-      print(response.toString());
+      // print(response.toString());
       if (response != null) {
         ChargeFundResponse chargeFundResponse =
             ChargeFundResponse.fromJson(response);
@@ -42,17 +42,34 @@ class PayWithDepositsController extends GetxController {
                 successTitle: Strings.paymentSuccessful,
                 successMessage: Strings.paymentSuccessmgs),
           );
-           finalChargeFundResponse = chargeFundResponse.obs;
+          finalChargeFundResponse = chargeFundResponse.obs;
+          // Navigator.of(context).pop();
+          // showDialog(
+          //     context: context,
+          //     useRootNavigator: false,
+          //     builder: (context) {
+          //       return Successful(
+          //           successTitle: Strings.paymentSuccessful,
+          //           successMessage: Strings.paymentSuccessmgs);
+          //     });
         } else {
-          if (response['message'].toString().toTitleCase() == 'Token Not Valid') {
-            Utils.navigationReplace(context, const Login());
+          if (response['message'].toString().toTitleCase() ==
+              'Token Not Valid') {
+            // Utils.navigationReplace(context, const Login());
+            Navigator.of(context).pop();
+            showDialog(
+                context: context,
+                useRootNavigator: false,
+                builder: (context) {
+                  return const Login();
+                });
             return Utils.showSnackbar(context, Strings.error,
                 'Token has expired please login again!.', AppColors.red);
-          }else{
-          return Utils.showSnackbar(
-              context, Strings.error, response['message'].toString().toTitleCase(), AppColors.red);
+          } else {
+            return Utils.showSnackbar(context, Strings.error,
+                response['message'].toString().toTitleCase(), AppColors.red);
+          }
         }
-      }
       }
     } finally {
       isLoading(false);
@@ -97,16 +114,33 @@ class PayWithDepositsController extends GetxController {
               successMessage: Strings.paymentSuccessmgs,
             ),
           );
-           finalChargeFundResponse = chargeFundResponse.obs;
+          finalChargeFundResponse = chargeFundResponse.obs;
+          // Navigator.of(context).pop();
+          // showDialog(
+          //     context: context,
+          //     useRootNavigator: false,
+          //     builder: (context) {
+          //       return Successful(
+          //           successTitle: Strings.paymentSuccessful,
+          //           successMessage: Strings.paymentSuccessmgs);
+          //     });
         } else {
-          if (response['message'].toString().toTitleCase() == 'Token Not Valid') {
-            Utils.navigationReplace(context, const Login());
+          if (response['message'].toString().toTitleCase() ==
+              'Token Not Valid') {
+            // Utils.navigationReplace(context, const Login());
+            Navigator.of(context).pop();
+            showDialog(
+                context: context,
+                useRootNavigator: false,
+                builder: (context) {
+                  return const Login();
+                });
             return Utils.showSnackbar(context, Strings.error,
                 'Token has expired please login again!.', AppColors.red);
-          }else{
-          return Utils.showSnackbar(
-              context, Strings.error, response['message'].toString().toTitleCase(), AppColors.red);
-        }
+          } else {
+            return Utils.showSnackbar(context, Strings.error,
+                response['message'].toString().toTitleCase(), AppColors.red);
+          }
         }
       }
     } finally {

@@ -43,13 +43,13 @@ class ConfirmOtpController extends GetxController {
                   Constants.cardId, primaryCard.value.id.toString());
               Storage.saveValue(Constants.cardNumber,
                   primaryCard.value.metaDataJson!.maskedCardNumber!);
-              Utils.navigationReplace(
-                  context,
-                  Successful(
-                    successTitle: 'Cards fetched Successfully',
-                    successMessage: DateFormat.jm().format(
-                        DateTime.parse(DateTime.now().toString()).toLocal()),
-                  ));
+              // Utils.navigationReplace(
+              //     context,
+              //     Successful(
+              //       successTitle: 'Cards fetched Successfully',
+              //       successMessage: DateFormat.jm().format(
+              //           DateTime.parse(DateTime.now().toString()).toLocal()),
+              //     ));
             } else {
               primaryCard.value = allCards.first;
               Storage.removeValue(Constants.cardNumber);
@@ -58,15 +58,17 @@ class ConfirmOtpController extends GetxController {
               Storage.saveValue(Constants.cardNumber,
                   allCards.first.metaDataJson!.maskedCardNumber!);
               Storage.saveValue(Constants.cardId, allCards.first.id.toString());
-              Utils.navigationReplace(
-                  context,
-                  Successful(
-                    successTitle: 'Cards fetched Successfully',
-                    successMessage: DateFormat.jm().format(
-                        DateTime.parse(DateTime.now().toString()).toLocal()),
-                  ));
+
             }
           }
+          Utils.navigationReplace(
+              context,
+              Successful(
+                successTitle: 'Cards fetched Successfully',
+                successMessage: DateFormat.jm().format(
+                    DateTime.parse(DateTime.now().toString()).toLocal()),
+              ));
+          // Navigator.of(context).pop();
         } else {
           Utils.navigationReplace(context, const PayWithBankCard());
           Utils.showSnackbar(context, Strings.success,
