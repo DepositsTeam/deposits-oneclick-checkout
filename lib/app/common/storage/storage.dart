@@ -4,7 +4,7 @@ import 'package:deposits_oneclick_checkout/app/common/utils/exports.dart';
 class Storage {
   const Storage._();
 
-  static final GetStorage _storage = GetStorage();
+  static final GetStorage _storage = GetStorage('one-click');
 
   static GetStorage get storage => _storage;
 
