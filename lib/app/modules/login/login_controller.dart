@@ -38,7 +38,8 @@ class LoginController extends GetxController {
         Dio dioService = Dio();
         dioService = Dio(BaseOptions(
           baseUrl: Constants.baseUrl(),
-        ));
+        ))
+          ..interceptors.add(Logging());
         (dioService.httpClientAdapter as DefaultHttpClientAdapter)
             .onHttpClientCreate = (HttpClient dioClient) {
           dioClient.badCertificateCallback =
@@ -55,6 +56,13 @@ class LoginController extends GetxController {
           final String message = respJson['message'] as String;
           if (status == Strings.success) {
             isLoading(false);
+            // Navigator.of(context).pop();
+            // showDialog(
+            //     context: context,
+            //     useRootNavigator: false,
+            //     builder: (context) {
+            //       return const ConfirmOtp();
+            //     });
             Utils.navigationReplace(context, const ConfirmOtp());
             Utils.showSnackbar(
                 context, Strings.success, message, AppColors.green);
