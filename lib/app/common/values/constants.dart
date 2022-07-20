@@ -18,8 +18,6 @@ class Constants{
       return url.toString();
     }
   }
-//timeout interval
-static const timeout = Duration(seconds: 30);
 // token
 static String apiKey = dotenv.env['masterApiKey'].toString();
 

@@ -29,16 +29,14 @@ class DioClient {
     try {
       if (method == Method.POST) {
         response = await _dio
-            .post(api, queryParameters: params)
-            .timeout(Constants.timeout);
+            .post(api, queryParameters: params);
       } else if (method == Method.DELETE) {
-        response = await _dio.delete(api).timeout(Constants.timeout);
+        response = await _dio.delete(api);
       } else if (method == Method.PATCH) {
-        response = await _dio.patch(api).timeout(Constants.timeout);
+        response = await _dio.patch(api);
       } else {
         response = await _dio
-            .get(api, queryParameters: params)
-            .timeout(Constants.timeout);
+            .get(api, queryParameters: params);
       }
       return response.data;
     } on DioError catch (e) {
