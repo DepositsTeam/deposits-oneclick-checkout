@@ -13,7 +13,7 @@ void depositsCheckout(
   required bool envMode,
   ValueChanged<ChargeFundResponse>? chargeFundsResponse,
 }) async {
-  GetStorage.init();
+  GetStorage.init('one-click');
   await dotenv.load(
       fileName:
           'packages/deposits_oneclick_checkout/lib/app/common/assets/.env');

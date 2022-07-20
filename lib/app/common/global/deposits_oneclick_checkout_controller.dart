@@ -33,11 +33,11 @@ class PayWithDepositsController extends GetxController {
           method: Method.POST,
           params: request);
       if (response != null) {
-        ChargeFundResponse chargeFundResponse =
+        ChargeFundResponse chargeResponse =
             ChargeFundResponse.fromJson(response);
-        if (chargeFundResponse.status == Strings.success) {
-          chargeFundResponse = chargeFundResponse;
-          finalChargeFundResponse = chargeFundResponse;
+        if (chargeResponse.status == Strings.success) {
+          chargeFundResponse!(chargeResponse) ;
+          finalChargeFundResponse = chargeResponse;
           Utils.navigationReplace(
             context,
             Successful(
@@ -88,11 +88,11 @@ class PayWithDepositsController extends GetxController {
           method: Method.POST,
           params: request);
       if (response != null) {
-        ChargeFundResponse chargeFundResponse =
+        ChargeFundResponse chargeResponse =
             ChargeFundResponse.fromJson(response);
-        if (chargeFundResponse.status == Strings.success) {
-          chargeFundResponse = chargeFundResponse;
-          finalChargeFundResponse = chargeFundResponse;
+        if (chargeResponse.status == Strings.success) {
+          chargeFundResponse!(chargeResponse);
+          finalChargeFundResponse = chargeResponse;
           Utils.navigationReplace(
             context,
             Successful(

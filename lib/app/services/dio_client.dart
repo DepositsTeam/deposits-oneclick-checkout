@@ -15,8 +15,8 @@ class DioClient {
     Dio _dio = Dio();
     _dio = Dio(BaseOptions(
       baseUrl: Constants.baseUrl(),
-      connectTimeout: 5000,
-      receiveTimeout: 3000,
+      // connectTimeout: 5000,
+      // receiveTimeout: 3000,
     ))
       ..interceptors.add(Logging());
     (_dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
