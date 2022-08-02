@@ -42,6 +42,10 @@ void depositsCheckout(
   });
 }
 
+void depositsClearStorage() {
+  Storage.clearStorage();
+}
+
 class PayButtonSheet extends StatefulWidget {
   final ButtonConfig buttonConfig;
   final String userEmail;
@@ -91,8 +95,8 @@ class _PayButtonSheetState extends State<PayButtonSheet> {
                           titleStyle: const TextStyle(color: AppColors.black),
                           titleOnTap: () {},
                           subtitle: Strings.edit,
-                          subtitleStyle:
-                              TextStyle(color: Utils.hexToInt(
+                          subtitleStyle: TextStyle(
+                              color: Utils.hexToInt(
                                   widget.buttonConfig.buttonColor)),
                           subTitleOnTap: () {
                             Storage.saveValue(Constants.customColor,
@@ -100,9 +104,7 @@ class _PayButtonSheetState extends State<PayButtonSheet> {
                             Navigator.pop(context);
                             //Navigator.of(context, rootNavigator: true).pop();
                             Utils.navigationPush(
-                              context,
-                              const ManageDepositID()
-                            );
+                                context, const ManageDepositID());
                           },
                         ),
                       ),

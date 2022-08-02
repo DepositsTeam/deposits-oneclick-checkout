@@ -139,7 +139,7 @@ class PaymentsController extends GetxController {
         'token': Storage.getValue(Constants.token),
         'api_key': Constants.apiKey,
         'sub_client_api_key': Storage.getValue(Constants.subClientApiKey),
-        'bank_id': bankId
+        'account_id': bankId
       };
 
       var response = await DioClient().request(
